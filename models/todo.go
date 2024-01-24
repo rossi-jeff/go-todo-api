@@ -1,3 +1,5 @@
+package models
+
 type ToDo struct {
 	BaseModel
 	Task      string `gorm:"size:255"`
