@@ -21,7 +21,7 @@ func GenerateToken(user models.User) (string, error) {
 	return token.SignedString([]byte(conf.Secret.JWT))
 }
 
-func UserIdFromHeader(c *gin.Context) {
+func UserIdFromHeader(c *gin.Context) int {
 	conf := config.New()
 	userId := 0
 	authorization := c.Request.Header["Authorization"]

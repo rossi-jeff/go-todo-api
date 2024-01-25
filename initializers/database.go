@@ -27,7 +27,7 @@ func DatabaseConnect() {
 }
 
 func ConnectionString(d config.DbConfig) string {
-	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", d.DbUser, d.DbPass, d.DbHost, d.DbPort, d.DbName)
+	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=True", d.DbUser, d.DbPass, d.DbHost, d.DbPort, d.DbName)
 }
 
 func Migrate(db *gorm.DB) {

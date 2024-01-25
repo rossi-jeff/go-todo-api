@@ -18,7 +18,7 @@ func New() *Config {
 		},
 		Secret: SecretConfig{
 			UserPass: getEnv("RAND_PW", "S3cr3t!"),
-			JWT: getEnv("JWT_SECRET","S3cr3t!")
+			JWT:      getEnv("JWT_SECRET", "S3cr3t!"),
 		},
 	}
 }

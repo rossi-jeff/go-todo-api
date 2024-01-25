@@ -10,6 +10,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary User Register
+// @Description Register as a User
+// @Tags Auth
+// @Accept       json
+// @Produce      json
+// @Param	data	body	dto.RegisterCredentials true "Register Credentials"
+// @Success 201 {object} models.UserResponse
+// @Failure      401  {object} dto.ErrorResponse
+// @Failure      400  {object} dto.ErrorResponse
+// @Router /auth/register [post]
 func AuthRegister(c *gin.Context) {
 	body := dto.RegisterCredentials{}
 	err := c.ShouldBindJSON(&body)
@@ -51,6 +61,16 @@ func AuthRegister(c *gin.Context) {
 	c.JSON(http.StatusCreated, response)
 }
 
+// @Summary User Login
+// @Description Login as a User
+// @Tags Auth
+// @Accept       json
+// @Produce      json
+// @Param	data	body	dto.LoginCredentials true "Login Credentials"
+// @Success 200 {object} dto.LoginResponse
+// @Failure      401  {object} dto.ErrorResponse
+// @Failure      400  {object} dto.ErrorResponse
+// @Router /auth/login [post]
 func AuthLogin(c *gin.Context) {
 	body := dto.LoginCredentials{}
 	err := c.ShouldBindJSON(&body)
@@ -60,7 +80,7 @@ func AuthLogin(c *gin.Context) {
 	}
 
 	user := models.User{}
-	initializers.DB.Where("UserName = ?", body.UserName).First(&user)
+	initializers.DB.Where("user_name = ?", body.UserName).First(&user)
 
 	if !utilities.PasswordsMatch(user.PassWordDigest, body.PassWord) {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
@@ -75,7 +95,7 @@ func AuthLogin(c *gin.Context) {
 
 	response := dto.LoginResponse{
 		UserName: body.UserName,
-		Token: token
+		Token:    token,
 	}
 	c.JSON(http.StatusOK, response)
 }
