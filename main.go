@@ -40,6 +40,13 @@ func main() {
 
 	// user
 	router.GET("/user", controllers.UserList)
+	router.GET("/user/current", controllers.UserCurrent)
+	router.PATCH("/user/change", controllers.UserChangePassWord)
+	router.PATCH("/user/:id", controllers.UserUpdate)
+	router.DELETE("/user/:id", controllers.UserDelete)
+
+	// todo
+	router.GET("/todo", controllers.ToDoList)
 
 	router.Run()
 	fmt.Println("main")
