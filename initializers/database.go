@@ -5,6 +5,8 @@ import (
 	"go-todo-api/config"
 	"log"
 
+	"go-todo-api/models"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -18,9 +20,15 @@ func DatabaseConnect() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	Migrate(db)
 	DB = db
 }
 
 func ConnectionString(d config.DbConfig) string {
 	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", d.DbUser, d.DbPass, d.DbHost, d.DbPort, d.DbName)
+}
+
+func Migrate(db *gorm.DB) {
+	db.AutoMigrate(models.User{})
+	db.AutoMigrate(models.ToDo{})
 }
