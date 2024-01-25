@@ -67,8 +67,15 @@ func AuthLogin(c *gin.Context) {
 		return
 	}
 
+	token, err2 := utilities.GenerateToken(user)
+	if err2 != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Unable to Generate Token"})
+		return
+	}
+
 	response := dto.LoginResponse{
 		UserName: body.UserName,
+		Token: token
 	}
 	c.JSON(http.StatusOK, response)
 }
