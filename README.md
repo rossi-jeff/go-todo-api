@@ -1,9 +1,17 @@
 # Go ToDo Api
 
-Build Swagger docs (issues with nullable int64)
+Setup Database
 
 ```
- swag init --parseDependency  --parseInternal --parseDepth 1
+cp .env.example .env
+```
+
+Edit .env and create appropriate empty database
+
+Build Swagger docs 
+
+```
+ swag init 
 ```
 
 Run project

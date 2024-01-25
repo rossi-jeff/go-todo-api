@@ -62,13 +62,14 @@ func UserCurrent(c *gin.Context) {
 // @Param	data	body	dto.UserAttrs true "User Attributes"
 // @Success 200 {object} models.UserResponse
 // @Failure      401  {object} dto.ErrorResponse
+// @Failure      400  {object} dto.ErrorResponse
 // @Router /user/{UserID} [patch]
 // @Security Bearer
 func UserUpdate(c *gin.Context) {
 	userId := utilities.UserIdFromHeader(c)
 	idStr := c.Param("id")
-	id, err2 := strconv.Atoi(idStr)
-	if userId == 0 || err2 != nil || userId != id {
+	id, err2 := strconv.ParseUint(idStr, 10, 8)
+	if userId == 0 || err2 != nil || userId != uint(id) {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 		return
 	}
@@ -105,8 +106,8 @@ func UserUpdate(c *gin.Context) {
 func UserDelete(c *gin.Context) {
 	userId := utilities.UserIdFromHeader(c)
 	idStr := c.Param("id")
-	id, err2 := strconv.Atoi(idStr)
-	if userId == 0 || err2 != nil || userId != id {
+	id, err2 := strconv.ParseUint(idStr, 10, 8)
+	if userId == 0 || err2 != nil || userId != uint(id) {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 		return
 	}
@@ -129,6 +130,7 @@ func UserDelete(c *gin.Context) {
 // @Param	data	body	dto.ChangePW true "PassWord Change Attributes"
 // @Success 200 {object} models.UserResponse
 // @Failure      401  {object} dto.ErrorResponse
+// @Failure      400  {object} dto.ErrorResponse
 // @Router /user/change [patch]
 // @Security Bearer
 func UserChangePassWord(c *gin.Context) {

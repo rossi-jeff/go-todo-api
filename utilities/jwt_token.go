@@ -21,9 +21,10 @@ func GenerateToken(user models.User) (string, error) {
 	return token.SignedString([]byte(conf.Secret.JWT))
 }
 
-func UserIdFromHeader(c *gin.Context) int {
+func UserIdFromHeader(c *gin.Context) uint {
 	conf := config.New()
-	userId := 0
+	var userId uint
+	userId = 0
 	authorization := c.Request.Header["Authorization"]
 	if len(authorization) == 0 {
 		return userId
@@ -44,7 +45,7 @@ func UserIdFromHeader(c *gin.Context) int {
 		claims, ok := token.Claims.(jwt.MapClaims)
 		if ok {
 			sub := claims["sub"].(float64)
-			userId = int(sub)
+			userId = uint(sub)
 		}
 	}
 	return userId

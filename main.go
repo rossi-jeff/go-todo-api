@@ -47,6 +47,10 @@ func main() {
 
 	// todo
 	router.GET("/todo", controllers.ToDoList)
+	router.POST("/todo", controllers.ToDoCreate)
+	router.GET("/todo/:id", controllers.ToDoById)
+	router.PATCH("/todo/:id", controllers.ToDoUpdate)
+	router.DELETE("/todo/:id", controllers.ToDoDelete)
 
 	router.Run()
 	fmt.Println("main")
