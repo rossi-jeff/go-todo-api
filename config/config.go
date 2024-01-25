@@ -4,6 +4,7 @@ import "os"
 
 type Config struct {
 	Database DbConfig
+	Secret   SecretConfig
 }
 
 func New() *Config {
@@ -14,6 +15,9 @@ func New() *Config {
 			DbHost: getEnv("DB_HOST", ""),
 			DbName: getEnv("DB_NAME", ""),
 			DbPort: getEnv("DB_PORT", ""),
+		},
+		Secret: SecretConfig{
+			UserPass: getEnv("RAND_PW", "S3cr3t!"),
 		},
 	}
 }
